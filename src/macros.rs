@@ -15,9 +15,80 @@ pub fn possible_truth_values(n: usize) -> Vec<Vec<bool>> {
     truth_values
 }
 
+/// A macro to print a truth table for a given proposition.
+///
+/// # Example
+///
+/// ```
+/// use propositional_logic_rs::prelude::*;
+///
+/// let compound_proposition = |p, q, r| -> bool { iff(q, (p && !q) || (!p && q)) && r };
+///
+/// truth_table!(|p, q, r| => compound_proposition);
+///
+/// println!();
+///
+/// // or inline
+/// truth_table!(inline_compound_proposition => |p, q, r| {
+///    iff(q, (p && !q) || (!p && q)) && r
+/// })
+/// ```
+///
+/// # Output
+///
+/// ```text
+/// +-------+-------+-------+----------------------+
+/// | p     | q     | r     | compound_proposition |
+/// +-------+-------+-------+----------------------+
+/// | true  | true  | true  |                false |
+/// +-------+-------+-------+----------------------+
+/// | true  | true  | false |                false |
+/// +-------+-------+-------+----------------------+
+/// | true  | false | true  |                false |
+/// +-------+-------+-------+----------------------+
+/// | true  | false | false |                false |
+/// +-------+-------+-------+----------------------+
+/// | false | true  | true  |                 true |
+/// +-------+-------+-------+----------------------+
+/// | false | true  | false |                false |
+/// +-------+-------+-------+----------------------+
+/// | false | false | true  |                 true |
+/// +-------+-------+-------+----------------------+
+/// | false | false | false |                false |
+/// +-------+-------+-------+----------------------+
+///
+/// +-------+-------+-------+-----------------------------+
+/// | p     | q     | r     | inline_compound_proposition |
+/// +-------+-------+-------+-----------------------------+
+/// | true  | true  | true  |                       false |
+/// +-------+-------+-------+-----------------------------+
+/// | true  | true  | false |                       false |
+/// +-------+-------+-------+-----------------------------+
+/// | true  | false | true  |                       false |
+/// +-------+-------+-------+-----------------------------+
+/// | true  | false | false |                       false |
+/// +-------+-------+-------+-----------------------------+
+/// | false | true  | true  |                        true |
+/// +-------+-------+-------+-----------------------------+
+/// | false | true  | false |                       false |
+/// +-------+-------+-------+-----------------------------+
+/// | false | false | true  |                        true |
+/// +-------+-------+-------+-----------------------------+
+/// | false | false | false |                       false |
+/// +-------+-------+-------+-----------------------------+
+/// ```
 #[macro_export]
-macro_rules! truth_table {
-    (($($atomic:ident),*) => $proposition:expr) => {
+macro_rules! print_truth_table {
+    ($prop_name:ident => |$($args:ident),*|  {$($body:tt)*}) => {
+        {
+            let $prop_name = | $($args: bool),* | -> bool {
+                $($body)*
+            };
+            print_truth_table!(|$($args),*| => $prop_name);
+        }
+    };
+
+    (|$($atomic:ident),*| => $proposition:expr) => {
         {
             use std::convert::identity;
 
