@@ -1,8 +1,13 @@
 /// Returns a vector of all possible truth values for a given number of atomic propositions.
+#[must_use]
 pub fn possible_truth_values(n: usize) -> Vec<Vec<bool>> {
+    if n == 0 {
+        return vec![vec![]];
+    }
+
     let mut truth_values = Vec::new();
 
-    for i in (0..2usize.pow(n as u32)).rev() {
+    for i in (0..(2 << (n - 1))).rev() {
         let mut truth_value = Vec::new();
 
         for j in (0..n).rev() {
@@ -122,4 +127,66 @@ macro_rules! print_truth_table {
             assert!(print_stdout(table).is_ok());
         }
     };
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_possible_truth_values_dimensions() {
+        // ensure the dimensions are correct up to 20 atomic propositions (2^20 = 1048576 rows)
+        for i in 0..20 {
+            let truth_values = possible_truth_values(i);
+            assert_eq!(truth_values.len(), 2usize.pow(i as u32));
+            for truth_value in truth_values {
+                assert_eq!(truth_value.len(), i);
+            }
+        }
+    }
+
+    #[test]
+    fn test_possible_truth_values() {
+        let expected = vec![
+            vec![true, true, true, true],
+            vec![true, true, true, false],
+            vec![true, true, false, true],
+            vec![true, true, false, false],
+            vec![true, false, true, true],
+            vec![true, false, true, false],
+            vec![true, false, false, true],
+            vec![true, false, false, false],
+            vec![false, true, true, true],
+            vec![false, true, true, false],
+            vec![false, true, false, true],
+            vec![false, true, false, false],
+            vec![false, false, true, true],
+            vec![false, false, true, false],
+            vec![false, false, false, true],
+            vec![false, false, false, false],
+        ];
+        assert_eq!(possible_truth_values(4), expected);
+        let expected = vec![
+            vec![true, true, true],
+            vec![true, true, false],
+            vec![true, false, true],
+            vec![true, false, false],
+            vec![false, true, true],
+            vec![false, true, false],
+            vec![false, false, true],
+            vec![false, false, false],
+        ];
+        assert_eq!(possible_truth_values(3), expected);
+        let expected = vec![
+            vec![true, true],
+            vec![true, false],
+            vec![false, true],
+            vec![false, false],
+        ];
+        assert_eq!(possible_truth_values(2), expected);
+        let expected = vec![vec![true], vec![false]];
+        assert_eq!(possible_truth_values(1), expected);
+        let expected = vec![vec![]];
+        assert_eq!(possible_truth_values(0), expected);
+    }
 }
