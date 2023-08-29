@@ -21,7 +21,7 @@ pub use cli_table;
 ///
 /// # Example
 ///
-/// ```
+/// ```rust
 /// use propositional_logic::prelude::*;
 ///
 /// let compound_proposition = |p, q, r| -> bool { iff(q, (p && !q) || (!p && q)) && r };
