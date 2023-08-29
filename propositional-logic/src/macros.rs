@@ -15,12 +15,14 @@ pub fn possible_truth_values(n: usize) -> Vec<Vec<bool>> {
     truth_values
 }
 
+pub use cli_table;
+
 /// A macro to print a truth table for a given proposition.
 ///
 /// # Example
 ///
 /// ```
-/// use propositional_logic_rs::prelude::*;
+/// use propositional_logic::prelude::*;
 ///
 /// let compound_proposition = |p, q, r| -> bool { iff(q, (p && !q) || (!p && q)) && r };
 ///

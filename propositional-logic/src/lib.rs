@@ -4,7 +4,7 @@ pub mod prelude;
 /// The Negation Logical Connective
 /// # Example
 /// ```
-/// use propositional_logic_rs::prelude::*;
+/// use propositional_logic::prelude::*;
 ///
 /// assert_eq!(not(true), false);
 /// assert_eq!(not(false), true);
@@ -17,7 +17,7 @@ pub fn not(a: bool) -> bool {
 ///
 /// # Example
 /// ```
-/// use propositional_logic_rs::prelude::*;
+/// use propositional_logic::prelude::*;
 ///
 /// assert_eq!(and(true, true), true);
 /// assert_eq!(and(true, false), false);
@@ -32,7 +32,7 @@ pub fn and(a: bool, b: bool) -> bool {
 ///
 /// # Example
 /// ```
-/// use propositional_logic_rs::prelude::*;
+/// use propositional_logic::prelude::*;
 ///
 /// assert_eq!(or(true, true), true);
 /// assert_eq!(or(true, false), true);
@@ -47,7 +47,7 @@ pub fn or(a: bool, b: bool) -> bool {
 ///
 /// # Example
 /// ```
-/// use propositional_logic_rs::prelude::*;
+/// use propositional_logic::prelude::*;
 ///
 /// assert_eq!(xor(true, true), false);
 /// assert_eq!(xor(true, false), true);
@@ -62,7 +62,7 @@ pub fn xor(a: bool, b: bool) -> bool {
 ///
 /// # Example
 /// ```
-/// use propositional_logic_rs::prelude::*;
+/// use propositional_logic::prelude::*;
 ///
 /// assert_eq!(imply(true, true), true);
 /// assert_eq!(imply(true, false), false);
@@ -77,7 +77,7 @@ pub fn imply(a: bool, b: bool) -> bool {
 ///
 /// # Example
 /// ```
-/// use propositional_logic_rs::prelude::*;
+/// use propositional_logic::prelude::*;
 ///
 /// assert_eq!(iff(true, true), true);
 /// assert_eq!(iff(true, false), false);

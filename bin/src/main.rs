@@ -1,4 +1,4 @@
-use propositional_logic_rs::prelude::*;
+use propositional_logic::prelude::*;
 
 fn main() {
     // example
