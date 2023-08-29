@@ -1,9 +1,0 @@
-[package]
-name = "playground"
-version = "0.1.0"
-edition = "2021"
-authors = ["Anthony Rubick"]
-publish = false
-
-[dependencies]
-propositional_logic = { path = "../propositional-logic" }
