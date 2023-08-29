@@ -1,5 +1,8 @@
 # Propositional Logic
 
+![crates.io](https://img.shields.io/crates/v/propositional_logic.svg)
+[![CI](https://github.com/AnthonyMichaelTDM/propositional-logic-rs/actions/workflows/rust.yml/badge.svg)](https://github.com/AnthonyMichaelTDM/propositional-logic-rs/actions/workflows/rust.yml)
+
 A rust library for generating the truth table of any single compound proposition.
 
 only has one dependency: [cli_table](https://crates.io/crates/cli_table)
