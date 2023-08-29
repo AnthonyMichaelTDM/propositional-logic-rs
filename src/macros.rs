@@ -24,12 +24,12 @@ pub fn possible_truth_values(n: usize) -> Vec<Vec<bool>> {
 ///
 /// let compound_proposition = |p, q, r| -> bool { iff(q, (p && !q) || (!p && q)) && r };
 ///
-/// truth_table!(|p, q, r| => compound_proposition);
+/// print_truth_table!(|p, q, r| => compound_proposition);
 ///
 /// println!();
 ///
 /// // or inline
-/// truth_table!(inline_compound_proposition => |p, q, r| {
+/// print_truth_table!(inline_compound_proposition => |p, q, r| {
 ///    iff(q, (p && !q) || (!p && q)) && r
 /// })
 /// ```
