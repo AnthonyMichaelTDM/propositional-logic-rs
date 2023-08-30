@@ -49,7 +49,7 @@ pub fn possible_truth_values(n: usize) -> Vec<Vec<bool>> {
 ///     compound_proposition,
 ///     inline_compound_proposition -> {
 ///         iff(q, (p && !q) || (!p && q)) && r
-///     },
+///     }
 /// });
 ///
 /// assert!(print_stdout(table).is_ok());
@@ -120,6 +120,28 @@ macro_rules! truth_table {
             {$($rest)*}
         )
     }};
+    // parser for inline syntax (last item)
+    (@muncher |$($atomic:ident),*| $($previous:ident),*; { $next:ident -> $body:expr }) => {{
+        // send the glob to the TT Munchers to get a bunch of expressions
+        let $next = | $($atomic: bool),* | -> bool {
+            $body
+        };
+        truth_table!(
+            @muncher
+            |$($atomic),*|
+            $($previous,)* $next;
+            {}
+        )
+    }};
+    // parser for function syntax (last item)
+    (@muncher |$($atomic:ident),*| $($previous:ident),*; { $next:ident }) => {{
+        truth_table!(
+            @muncher
+            |$($atomic),*|
+            $($previous,)* $next;
+            {}
+        )
+    }};
     // the final state of the parser
     (@muncher |$($atomic:ident),*| $($compound_proposition:ident),*; {}) => {{
         use ::std::convert::identity;
@@ -155,8 +177,6 @@ macro_rules! truth_table {
                 stringify!($compound_proposition).cell().bold(true),
             )*
         ]).bold(true);
-        // PRINT
-        // assert!(print_stdout(table).is_ok());
         table
     }};
 }
@@ -195,12 +215,12 @@ macro_rules! truth_table {
 ///     not(p)
 /// });
 /// println!();
-/// // giving it both (you can give it as many as you want, but every item must have a comma at the end (even the last one))
+/// // giving it both (you can give it as many as you want)
 /// print_truth_table!(|p,q| => {
 ///     compound_proposition,
 ///     inline_compound_proposition -> {
 ///         not(p)
-///     },
+///     }
 /// });
 /// ```
 ///
